@@ -1,9 +1,9 @@
 <?php
 // Inclure les fichiers de configuration et de fonctions
-require_once(__DIR__. '/src/config/connect.php');
-require_once(__DIR__. '/config/database.php');
-require_once(__DIR__. '/config/mysql.php');
-require_once(__DIR__. '/config/functions.php');
+require_once(__DIR__ . '/src/config/connect.php');
+require_once(__DIR__ . '/config/database.php');
+require_once(__DIR__ . '/config/mysql.php');
+require_once(__DIR__ . '/config/functions.php');
 
 // Définir les variables globales
 $beers = getBeersFromDatabase($conn);
