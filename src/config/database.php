@@ -1,19 +1,21 @@
 <?php
-// Définir les fonctions pour les opérations de base de données ici
-function getBeersFromDatabase($conn) {
-    // Retourner un tableau de bières à partir d'une base de données
-    $results = array();
-    $sql = "SELECT * FROM beers";
-    $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $results[] = $row;
-        }
-    }
-    return $results;
+// Inclusion du fichier de constantes de connexion à la base de données de Beerdealer
+require_once 'mysql.php';
+
+try {
+    // Création d'une nouvelle instance de la classe PDO pour se connecter à la base de données de Beerdealer
+    $beerdealer = new PDO(
+        sprintf('mysql:host=%s;dbname=%s;port=%s;charset=utf8', BEERDEALER_HOST, BEERDEALER_NAME, BEERDEALER_PORT),
+        BEERDEALER_USER,
+        BEERDEALER_PASSWORD
+    );
+
+    // Définition du mode d'erreur de la connexion à la base de données de Beerdealer
+    $beerdealer->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (Exception $exception) {
+    // Affichage d'un message d'erreur en cas d'échec de la connexion à la base de données de Beerdealer
+    die('Erreur de connexion à la base de données de Beerdealer : '. $exception->getMessage());
 }
 
-// Fermer la connexion
-$conn->close();
 ?>
