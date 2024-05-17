@@ -1,19 +1,21 @@
 <?php
-// Inclure les fichiers de configuration et de fonctions
+session_start();
+require_once(__DIR__ . '/src/config/mysql.php');
 require_once(__DIR__ . '/src/config/connect.php');
-require_once(__DIR__ . '/config/database.php');
-require_once(__DIR__ . '/config/mysql.php');
-require_once(__DIR__ . '/config/functions.php');
 
-// Définir les variables globales
-$beers = getBeersFromDatabase($conn);
-$searchTerm = '';
-
-// Vérifier si le formulaire de recherche a été soumis
-if (isset($_POST['search'])) {
-    $searchTerm = $_POST['search'];
-    $beers = searchBeers($searchTerm, $beers);
-}
+// $sql = 'SELECT * FROM beers
+// JOIN user_beer ON user_beer.beer_id = beers.beer_id
+// WHERE user_beer.user_id=:user_id';
+// $request = $client->prepare($sql);
+// $request->execute([
+//     'user_id' => $_SESSION['user_id']
+// ]);
+// $recipes = $request->fetchAll();
+$sql = 'SELECT * FROM beers
+JOIN user_beer ON user_beer.beer_id = beers.beer_id';
+$request = $client->prepare($sql);
+$request->execute();
+$beers = $request->fetchAll();
 ?>
 
 <!DOCTYPE html>

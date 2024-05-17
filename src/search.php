@@ -9,4 +9,14 @@ function searchBeers($searchTerm, $beers) {
     }
     return $results;
 }
+
+function getMostLikedBeers($beers) {
+    // Trier les bières en fonction du nombre de likes
+    usort($beers, function($a, $b) {
+        return $b['likes'] - $a['likes'];
+    });
+
+    // Renvoyer les 10 bières les plus populaires
+    return array_slice($beers, 0, 10);
+}
 ?>
