@@ -46,14 +46,15 @@ $beers = $request->fetchAll();
 
 <body>
     <header>
-        <h1>BeerDealer</h1>
-        <form action="api.php" method="post" onsubmit="showLoader()"> <!-- Lien vers api.php -->
-            <input type="text" name="search" placeholder="Rechercher une bière..." >
-            <button type="submit">Rechercher</button>
-        </form>
+        
     </header>
     <main>
         <section>
+            <h1>BeerDealer</h1>
+            <form action="api.php" method="post" onsubmit="showLoader()"> <!-- Lien vers api.php -->
+                <input type="text" name="search" placeholder="Rechercher une bière..." >
+                <button type="submit">Rechercher</button>
+            </form>
             <h2>Liste des bières</h2>
             <ul>
                 <?php foreach ($beers as $beer) :
