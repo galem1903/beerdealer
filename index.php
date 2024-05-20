@@ -26,7 +26,7 @@ $beers = $request->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeerDealer</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <style>
         #loader {
             display: none;
@@ -48,7 +48,7 @@ $beers = $request->fetchAll();
     <header>
         <h1>BeerDealer</h1>
         <form action="api.php" method="post" onsubmit="showLoader()"> <!-- Lien vers api.php -->
-            <input type="text" name="search" placeholder="Rechercher une bière..." value="<?= htmlspecialchars($searchTerm)?>">
+            <input type="text" name="search" placeholder="Rechercher une bière..." >
             <button type="submit">Rechercher</button>
         </form>
     </header>

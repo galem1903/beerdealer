@@ -1,148 +1,146 @@
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px
+/* Global styles */
+ 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
-header nav,
-header nav ul {
-    display: flex;
-}
-
-header nav ul li {
-    margin: 0 20px;
-}
-
+ 
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-    height: auto;
-    margin-bottom: 7em;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+ 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  color: #333;
+}
+ 
+p {
+  margin-bottom: 20px;
+}
+ 
+/* Header styles */
+ 
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+ 
+header h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
-#menu {
-    background-color: #ddd
-}
-
-.nav {
-    margin: 10px
-}
-
-.nav h3 {
-    color: #333
-}
-
-nav ul {
-    list-style-type: none;
-    padding: 0
-}
-
-.nav li a {
-    color: #333;
-    text-decoration: none
-}
-
-#corps {
-    margin: 20px;
-    display: block;
-    width: 40%;
-    margin: 0 auto;
-}
+/* footer styles */
 
 footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
-.login-page {
-    width: 360px;
-    padding: 8% 0 0;
-    margin: auto;
-  }
- .form {
-    position: relative;
-    z-index: 1;
-    background: #FFFFFF;
-    max-width: 360px;
-    margin: 0 auto 50px;
-    padding: 30px;
-    text-align: center;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-  }
- .form input {
-    font-family: "Roboto", sans-serif;
-    outline: 0;
-    background: #f2f2f2;
-    width: 100%;
-    border: 0;
-    margin: 0 0 15px;
-    padding: 15px;
-    box-sizing: border-box;
-    font-size: 14px;
-  }
- .form button {
-    font-family: "Roboto", sans-serif;
-    text-transform: uppercase;
-    outline: 0;
-    background: #4CAF50;
-    width: 100%;
-    border: 0;
-    padding: 15px;
-    color: #FFFFFF;
-    font-size: 14px;
-    -webkit-transition: all 0.3 ease;
-    transition: all 0.3 ease;
-    cursor: pointer;
-  }
- .form button:hover,.form button:active,.form button:focus {
-    background: #43A047;
-  }
- .form.message {
-    margin: 15px 0 0;
-    color: #b3b3b3;
-    font-size: 12px;
-  }
- .form.message a {
-    color: #4CAF50;
-    text-decoration: none;
-  }
- .form.register-form {
-    display: none;
-  }
- .container {
-    position: relative;
-    z-index: 1;
-    max-width: 300px;
-    margin: 0 auto;
-  }
- .container:before,.container:after {
-    content: "";
-    display: block;
-    clear: both;
-  }
- .container.info {
-    margin: 50px auto;
-    text-align: center;
-  }
- .container.info h1 {
-    margin: 0 0 15px;
-    padding: 0;
-    font-size: 36px;
-    font-weight: 300;
-    color: #1a1a1a;
-  }
- .container.info span {
-    color: #4d4d4d;
-    font-size: 12px;
-  }
- .container.info span a {
-    color: #000000;
-    text-decoration: none;
-  }
- .container.info span.fa {
-    color: #EF3B3A;
-  }
+/* Search form styles */
+ 
+.search-form {
+  margin: 20px auto;
+  width: 50%;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+ 
+.search-form input[type="text"] {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+}
+ 
+.search-form input[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+ 
+.search-form input[type="submit"]:hover {
+  background-color: #444;
+}
+ 
+/* Beer list styles */
+ 
+.beer-list {
+  margin: 20px auto;
+  width: 80%;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+ 
+.beer-list h3 {
+  margin-top: 0;
+}
+ 
+.beer-list img {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  border-radius: 10px;
+}
+ 
+.beer-list p {
+  margin-bottom: 10px;
+}
+ 
+/* Most liked beers table styles */
+ 
+.most-liked-beers {
+  margin: 20px auto;
+  width: 80%;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+ 
+.most-liked-beers table {
+  width: 100%;
+  border-collapse: collapse;
+}
+ 
+.most-liked-beers th,.most-liked-beers td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+ 
+.most-liked-beers th {
+  background-color: #333;
+  color: #fff;
+}
+ 
+.most-liked-beers td {
+  background-color: #fff;
+}
+ 
+.most-liked-beers td img {
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  border-radius: 10px;
+}
