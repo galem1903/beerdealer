@@ -1,9 +1,9 @@
 <header>
     <nav>
         <ul>
-            <li><a href="#">Accueil</a></li>
-            <li><a href="#">Recherche de bières</a></li>
-            <li><a href="#">Mes bières favorites</a></li>
+            <li><a href="index.php">Accueil</a></li>
+            <li><a href="contact.php">Contact</a></li>
+            <li><a href="favorite_beers.php">Mes bières favorites</a></li>
         </ul>
     </nav>
     <h1>BeerDealer</h1>

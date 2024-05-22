@@ -2,6 +2,8 @@
 session_start();
 require_once(__DIR__. '/src/config/mysql.php');
 require_once(__DIR__. '/src/config/connect.php');
+require_once(__DIR__. '/src/partials/header.php');
+require_once(__DIR__. '/src/partials/footer.php');
 
 // $sql = 'SELECT * FROM beers
 // JOIN user_beer ON user_beer.beer_id = beers.beer_id
