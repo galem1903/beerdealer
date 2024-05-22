@@ -31,6 +31,11 @@
                 echo "<p>Percentage: ". $beer['abv']. "</p>";
                 echo "<p>Rating: ". $beer['averageQuickRating']. "</p>";
                 echo "<img src='". $beer['imageUrl']. "' alt='". $beer['name']. "' />";
+                    echo "<form action=\"/favorite_beers.php\" method=\"post\">";
+                         echo "<input type=\"hidden\" name=\"user_id\" value=\"<?php echo $user_id;?>\">";
+                         echo "<input type=\"hidden\" name=\"beer_id\" value=\"<?php echo $beer_id;?>\">";
+                         echo "<button type=\"submit\">Ajouter à mes favoris</button>";
+                    echo "</form>";
             }
         } else {
             echo "<p>No results found</p>";

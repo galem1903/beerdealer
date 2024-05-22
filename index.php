@@ -71,6 +71,17 @@ $beers = $request->fetchAll();
                 <?php endforeach;?>
             </ul>
         </section>
+        <?php include 'query.php';?>
+
+    <h1>Les bières les plus populaires</h1>
+    <ul>
+        <?php foreach ($beers as $beer):?>
+            <li>
+                <h2><?= $beer['name']?></h2>
+                <p>Nombre de likes : <?= $beer['liked']?></p>
+            </li>
+        <?php endforeach;?>
+    </ul>
     </main>
     <footer>
         <p>&copy; 2023 BeerDealer</p>

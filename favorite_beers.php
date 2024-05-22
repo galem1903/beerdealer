@@ -1,26 +1,29 @@
 <?php
 session_start();
 
-if (isset($_SESSION['loggedUser'])) {
-    $user_id = $_SESSION['loggedUser']['user_id'];
+if (isset($_POST['user_id']) && isset($_POST['beer_id'])) {
+    $user_id = $_POST['user_id'];
+    $beer_id = $_POST['beer_id'];
 
-    $sql = 'SELECT beers.* FROM user_beer
-            JOIN beers ON user_beer.beer_id = beers.beer_id
-            WHERE user_beer.user_id = :user_id';
-    $request = $client->prepare($sql);
-    $request->execute([
-        'user_id' => $user_id,
-    ]);
+    // Connexion à la base de données
+    $db = mysqli_connect('localhost', 'ee67ed30eled', 'r5|e5e?0ed', 'rbleaebler20');
 
-    $beers = $request->fetchAll();
-}
-
-if (isset($beers)) {
-    foreach ($beers as $beer) {
-        echo "<h2>". htmlspecialchars($beer['name']). "</h2>";
-        echo "<p>". htmlspecialchars($beer['description']). "</p>";
+    if (!$db) {
+        die('Erreur de connexion à la base de données');
     }
-} else {
-    echo "<p>Aucune bière n'a été trouvée.</p>";
+
+    // Vérifier si la bière est déjà dans la liste des favoris
+    $query = "SELECT * FROM user_beer WHERE user_id = $user_id AND beer_id = $beer_id";
+    $result = mysqli_query($db, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        // La bière est déjà dans la liste des favoris, ne rien faire
+    } else {
+        // Ajouter la bière à la liste des favoris
+        $query = "INSERT INTO user_beer (user_id, beer_id, liked) VALUES ($user_id, $beer_id, 1)";
+        mysqli_query($db, $query);
+    }
+
+    mysqli_close($db);
 }
 ?>
