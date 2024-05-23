@@ -71,7 +71,7 @@ $beers = $request->fetchAll();
                 <?php endforeach;?>
             </ul>
         </section>
-        <?php include 'query.php';?>
+        <?php include 'src/query.php';?>
 
     <h1>Les bières les plus populaires</h1>
     <ul>
