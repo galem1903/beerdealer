@@ -32,6 +32,6 @@ if (isset($_POST['full_name']) && isset($_POST['email']) && isset($_POST['passwo
             <input type="number" name="age">
         </div>
         <button type="submit">Inscription</button>
-        <p class="message">Already registered? <a href="#">Sign In</a></p>
+        <p class="message">Already registered? <a href="login.php">Sign In</a></p>
     </form>
 <?php endif;?>
