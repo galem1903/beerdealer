@@ -2,6 +2,9 @@
 // Inclure le fichier security.php
 require 'security/security.php';
 
+require_once(__DIR__. '/config/mysql.php');
+require_once(__DIR__. '/config/connect.php');
+
 // Vérifier si la connexion est sécurisée (HTTPS) et définir l'en-tête Strict-Transport-Security
 if (!empty($_SERVER['HTTPS'])) {
     header("Strict-Transport-Safety: max-age=31536000");
@@ -29,11 +32,12 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     ]);
     $user = $request->fetch();
     if ($user) {
-        $_SESSION['loggedUser'] = true;
-        $_SESSION['full_name'] = $user['full_name'];
+        $_SESSION['loggedUser'] = [
+                'user_id' => $user['user_id'],
+                'full_name' => $user['full_name']
+        ];
         // Rediriger l'utilisateur vers la page home.php
         header('Location: ../index.php');
-        exit;
     } else {
         echo 'mauvais login/password';
     }
@@ -44,7 +48,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 ?>
 
 <?php if (!isset($_SESSION['loggedUser'])) :?>
-    <form action="index.php" method="POST" class="login-form">
+    <form action="login.php" method="POST" class="login-form">
         <div>
             <label for="email">Email</label>
             <input type="email" name="email">
@@ -56,11 +60,8 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         <button type="submit">Envoyer</button>
         <p class="message">Not Registered?<a href="register.php">Create an account</a></p>
     </form>
-<?php else :?>
-    <div>
-        <p>Utilisateur Connecté</p>
-        <p><?php echo $_SESSION['full_name'];?></p>
-        <a href="src/logout.php">Déconnexion</a>
-    </div>
+<?php else: ?>
 
-<?php endif;?>
+<?php echo $_SESSION['full_name']; ?>
+
+<?php endif; ?>
