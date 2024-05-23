@@ -43,9 +43,9 @@ $beers = $request->fetchAll();
 
 <?php require_once(__DIR__ . '/src/partials/header.php'); ?>
 <main>
-    <section class="beer-list">
+    <section class="container">
         <h2>Mes bières favorites</h2>
-        <div class="items">
+        <div class="data">
             <?php foreach ($beers as $beer): ?>
                 <article>
                     <div class="title">

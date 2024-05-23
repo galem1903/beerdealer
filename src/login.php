@@ -1,40 +1,29 @@
 <?php
 // Inclure le fichier security.php
-require 'security/security.php';
+require_once 'security/security.php';
 
-require_once(__DIR__. '/config/mysql.php');
-require_once(__DIR__. '/config/connect.php');
-
-// Vérifier si la connexion est sécurisée (HTTPS) et définir l'en-tête Strict-Transport-Security
-if (!empty($_SERVER['HTTPS'])) {
-    header("Strict-Transport-Safety: max-age=31536000");
+if (isset($_SESSION['loggedUser'])) {
+    header('Location: ../index.php');
 }
 
-// Démarrer la session et définir les valeurs par défaut pour les variables de session
-// session_start();
+require_once(__DIR__ . '/config/mysql.php');
+require_once(__DIR__ . '/config/connect.php');
 
-if (!isset($_SESSION['secret'])) {
-    $_SESSION['secret'] = uniqid("", true);
-}
-if (!isset($_SESSION['counter'])) {
-    $_SESSION['counter'] = 0;
-}
 
-// Incrémenter la variable de session counter
-$_SESSION['counter'] = 1 + $_SESSION['counter'];
-
-if (isset($_POST['email']) && isset($_POST['password'])) {
-    $sql = 'SELECT * FROM `users` WHERE email=:email AND password=:password';
+if (isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['password']) && !empty($_POST['password'])) {
+    $sql = 'SELECT * FROM `users` WHERE email=:email';
     $request = $client->prepare($sql);
     $request->execute([
-        "email" => $_POST['email'],
-        "password" => $_POST['password'],
+        "email" => $_POST['email']
     ]);
     $user = $request->fetch();
-    if ($user) {
+    $password = $user['password'];
+
+    if (password_verify($_POST['password'], $user['password'])) {
         $_SESSION['loggedUser'] = [
-                'user_id' => $user['user_id'],
-                'full_name' => $user['full_name']
+            'user_id' => $user['user_id'],
+            'full_name' => $user['name'],
+            'creation_date' => $user['creation_date']
         ];
         // Rediriger l'utilisateur vers la page home.php
         header('Location: ../index.php');
@@ -46,22 +35,29 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 //step 1
 //afficher un formulaire
 ?>
+<!DOCTYPE html>
+<html>
 
-<?php if (!isset($_SESSION['loggedUser'])) :?>
-    <form action="login.php" method="POST" class="login-form">
-        <div>
-            <label for="email">Email</label>
-            <input type="email" name="email">
+<head>
+    <meta charset="utf-8"/>
+    <title>Mon site</title>
+    <link href="../css/style.css" rel="stylesheet"/>
+</head>
+
+    <body>
+        <div class="form">
+            <main class="form">
+                <section class="container">
+                    <h2>Page de Connexion</h2>
+                    <form class="data" action="login.php" method="POST">
+                        <input type="email" name="email" placeholder="Email">
+                        <input type="password" name="password" placeholder="Mots de passe">
+                        <input type="submit" value="Se connecter">
+                        <p class="message">Pas de compte?<a href="register.php"> Créer un compte</a></p>
+                    </form>
+                </section>
+            </main>
         </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" name="password">
-        </div>
-        <button type="submit">Envoyer</button>
-        <p class="message">Not Registered?<a href="register.php">Create an account</a></p>
-    </form>
-<?php else: ?>
-
-<?php echo $_SESSION['full_name']; ?>
-
-<?php endif; ?>
+    <?php require_once('partials/footer.php'); ?>
+    </body>
+</html>

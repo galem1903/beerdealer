@@ -18,8 +18,13 @@ require_once(__DIR__ . '/src/config/connect.php');
 // ]);
 // $recipes = $request->fetchAll();
 
+$sql = "SELECT beers.name, COUNT(user_beer.beer_id) as likes
+        FROM beers 
+        JOIN user_beer ON beers.beer_id = user_beer.beer_id 
+        GROUP BY beers.name
+        ORDER BY likes DESC";
 
-$sql = 'SELECT * FROM beers JOIN user_beer ON user_beer.beer_id = beers.beer_id';
+
 $request = $client->prepare($sql);
 $request->execute();
 $beers = $request->fetchAll();
@@ -56,15 +61,14 @@ $beers = $request->fetchAll();
         <input type="submit" value="Rechercher">
     </form>
 
-
-    <section class="beer-list">
+    <section class="container">
         <h2>Les bières les plus populaires</h2>
-        <div class="items">
+        <div class="data">
             <?php foreach ($beers as $beer): ?>
                 <article>
                     <div class="title">
                         <h3><?= $beer['name'] ?></h3>
-                        <span class="like"><?= 1 ?></span>
+                        <span class="like"><?= $beer['likes'] ?></span>
                     </div>
                 </article>
             <?php endforeach; ?>

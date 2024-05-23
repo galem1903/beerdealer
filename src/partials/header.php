@@ -1,6 +1,6 @@
 <header>
     <nav id="menu">
-        <img src="images/logo_beerdealer.png" height="65px" width="65px" alt="Logo de Beer Dealer">
+        <img src="images/logo_beerdealer.png" alt="Logo de Beer Dealer">
         <ul>
             <li><a href="index.php">Accueil</a></li>
             <li><a href="favorite_beers.php">Mes bières favorites</a></li>

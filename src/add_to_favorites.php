@@ -1,6 +1,6 @@
 <?php
-
-session_start();
+// Inclure le fichier security.php
+require_once 'security/security.php';
 
 require_once(__DIR__. '/config/mysql.php');
 require_once(__DIR__. '/config/connect.php');
@@ -21,9 +21,10 @@ if (isset($_SESSION['loggedUser'])) {
         $result = $request->fetch();
         $beer_id = 0;
         if ($request->rowCount() == 0) {
-            $sql = 'INSERT INTO beers (name, brewery, type, percentage, rating) values (:name, :brewery, :type, :percentage, :rating)';
+            $sql = 'INSERT INTO beers (beer_id, name, brewery, type, percentage, rating) values (:beer_id, :name, :brewery, :type, :percentage, :rating)';
             $request = $client->prepare($sql);
             $request->execute([
+                'beer_id' => $favorite_beer['id'],
                 'name' => $favorite_beer['name'],
                 'brewery' => $favorite_beer['brewer']['name'],
                 'type' => $favorite_beer['style']['name'],

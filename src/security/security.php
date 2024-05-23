@@ -15,13 +15,3 @@ if (!isset($_SESSION['counter'])) {
     $_SESSION['counter'] = 0;
 }
 ?>
-
-<h1 style="display: none;">Sessions</h1>
-<p style="display: none;">Votre ID de session : <strong><code><?php echo(session_id());?></code></strong></p>
-<p style="display: none;">Votre secret : <strong><code><?php echo($_SESSION['secret']);?></code></strong></p>
-<?php
-
-// Incrémenter la variable de session counter
-$_SESSION['counter'] = 1 + $_SESSION['counter'];
-?>
-<p style="display: none;">Votre visite #<?php echo($_SESSION['counter']);?></p>

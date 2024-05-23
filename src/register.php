@@ -1,41 +1,60 @@
 <?php
+// Inclure le fichier security.php
+require_once 'security/security.php';
+
+if (isset($_SESSION['loggedUser'])) {
+    header('Location: ../index.php');
+}
 
 require_once(__DIR__. '/config/mysql.php');
 require_once(__DIR__. '/config/connect.php');
 
-if (isset($_POST['full_name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['age'])) {
-    $sql = 'INSERT INTO users (full_name, email, password, age) VALUES (:full_name, :email, :password, :age)';
+if (isset($_POST['full_name']) && !empty($_POST['full_name']) && isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['password']) && !empty($_POST['password'])) {
+    $sql = 'INSERT INTO users (name, email, password, creation_date) VALUES (:name, :email, :password, :creation_date)';
     $request = $client->prepare($sql);
-    $request->execute([
-        'full_name' => $_POST['full_name'],
+    $creation_date = date('Y-m-d', time());
+    $result = $request->execute([
+        'name' => $_POST['full_name'],
         'email' => $_POST['email'],
         'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
-        'age' => $_POST['age'],
+        'creation_date' => $creation_date
     ]);
-    header("Location: index.php");
+    if ($result) {
+        $_SESSION['loggedUser'] = [
+            'user_id' => $client->lastInsertId(),
+            'full_name' =>  $_POST['full_name'],
+            'creation_date' => $creation_date
+        ];
+        header("Location: ../index.php");
+    }
 }
 
 ?>
 
-<?php if (!isset($_SESSION['loggedUser'])) :?>
-    <form action="register.php" method="POST" class="register-form">
-        <div>
-            <label for="full_name">Nom complet</label>
-            <input type="text" name="full_name">
-        </div>
-        <div>
-            <label for="email">Email</label>
-            <input type="email" name="email">
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" name="password">
-        </div>
-        <div>
-            <label for="age">Age</label>
-            <input type="number" name="age">
-        </div>
-        <button type="submit">Inscription</button>
-        <p class="message">Already registered? <a href="login.php">Sign In</a></p>
-    </form>
-<?php endif;?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Mon site</title>
+    <link href="../css/style.css" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="form">
+    <main class="form">
+        <section class="container">
+            <h2>Page d'Inscription</h2>
+            <form class="data" action="register.php" method="POST">
+                <input type="text" name="full_name" placeholder="Pseudo">
+                <input type="email" name="email" placeholder="Email">
+                <input type="password" name="password" placeholder="Mots de passe">
+                <input type="submit" value="Créer mon compte">
+                <p class="message">Déjà un compte?<a href="login.php"> Se connecter</a></p>
+            </form>
+        </section>
+    </main>
+</div>
+<?php require_once('partials/footer.php'); ?>
+</body>
+</html>

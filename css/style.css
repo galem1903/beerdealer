@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
-  --gold: #D4AF37;
-  --brown: #3d1c05;
-  --light-brown: #ab7d68;
-  --cream: #F5F5DC;
+  --gold: black;
+  --brown: #D4AF37;
+  --light-brown: grey;
+  --cream: #eaeaea;
 
   --border-radius: 0.5em;
 }
@@ -16,7 +18,7 @@
 }
  
 body {
-  font-family: Arial, sans-serif;
+  font-family: Poppins, sans-serif;
   background-color: var(--cream);
 }
  
@@ -32,14 +34,22 @@ a, a:visited {
 ul {
   list-style: none;
 }
+
+input[type=submit]:hover {
+  cursor: pointer;
+}
  
 /* Header styles */
  
 header {
   background-color: var(--brown);
   color: #fff;
-  padding: 20px;
+  padding: 1em 2em;
   text-align: center;
+}
+
+header img {
+  height: 80px;
 }
 
 header #menu {
@@ -50,10 +60,11 @@ header #menu {
 header #menu > * {
   display: flex;
   align-items: center;
+  font-size: 1.5rem;
 }
 
 header ul {
-  gap: 2em;
+  gap: 5em;
 }
 
 header a {
@@ -80,6 +91,15 @@ main {
   flex-direction: column;
   gap: 2em;
   padding: 2em;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+}
+
+.form main {
+  width: 800px;
 }
 
 /* Search form styles */
@@ -123,7 +143,7 @@ main {
  
 /* Most liked beers */
 
-.beer-list {
+.container {
   width: 100%;
   border: 1px solid #ddd;
   border-radius: var(--border-radius);
@@ -131,50 +151,87 @@ main {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.beer-list h2 {
+.container h2 {
   background: var(--brown);
   color: var(--gold);
 }
 
-.beer-list > * {
+.container > * {
   padding: 20px;
 }
  
-.beer-list .items {
-  background-color: var(--light-brown);
+.container .data {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+
   grid-gap: 1em;
+
+  background-color: var(--light-brown);
 }
 
-.beer-list .items article {
+.container .data article {
   background: var(--gold);
   gap: 0.75em;
   align-items: center;
 }
 
-.beer-list .items article > * {
-  padding: 1em;
+.container .data article > * {
   display: flex;
   justify-content: space-between;
-  gap: 0.75em;
   align-items: center;
+  gap: 0.75em;
+
+  padding: 1em;
 }
 
-.beer-list .items article .title {
+.container .data article .title {
   background: white;
 }
 
-.beer-list .items .like {
+.container .data article div {
+  color: white;
+}
+
+.container .data article div img {
+  height: 100px;
+}
+
+.container .data article span {
+  font-weight: bold;
+}
+
+.container .data .like {
   display: flex;
   align-items: center;
   color: white;
   font-weight: bold;
-  aspect-ratio: 1;
   text-align: center;
   padding: 0 0.5em;
   background: red;
   border-radius: var(--border-radius);
+}
+
+.form .data {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form .data input {
+  font-size: 1.1em;
+  padding: 0.5em;
+  border-radius: var(--border-radius);
+  border: none;
+}
+
+.form .data input[type=submit] {
+  font-weight: bold;
+  background: var(--brown);
+}
+
+.form .data textarea {
+  padding: 0.5em;
+  width: 100%;
 }
 
 /* Loader styling */
