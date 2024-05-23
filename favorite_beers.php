@@ -1,29 +1,62 @@
 <?php
+
 session_start();
 
-if (isset($_POST['user_id']) && isset($_POST['beer_id'])) {
-    $user_id = $_POST['user_id'];
-    $beer_id = $_POST['beer_id'];
-
-    // Connexion à la base de données
-    $db = mysqli_connect('localhost', 'ee67ed30eled', 'r5|e5e?0ed', 'rbleaebler20');
-
-    if (!$db) {
-        die('Erreur de connexion à la base de données');
-    }
-
-    // Vérifier si la bière est déjà dans la liste des favoris
-    $query = "SELECT * FROM user_beer WHERE user_id = $user_id AND beer_id = $beer_id";
-    $result = mysqli_query($db, $query);
-
-    if (mysqli_num_rows($result) > 0) {
-        // La bière est déjà dans la liste des favoris, ne rien faire
-    } else {
-        // Ajouter la bière à la liste des favoris
-        $query = "INSERT INTO user_beer (user_id, beer_id, liked) VALUES ($user_id, $beer_id, 1)";
-        mysqli_query($db, $query);
-    }
-
-    mysqli_close($db);
+if (!isset($_SESSION['loggedUser'])) {
+    header('Location: src/login.php');
 }
+
+require_once(__DIR__ . '/src/config/mysql.php');
+require_once(__DIR__ . '/src/config/connect.php');
+
+// $sql = 'SELECT * FROM beers
+// JOIN user_beer ON user_beer.beer_id = beers.beer_id
+// WHERE user_beer.user_id=:user_id';
+// $request = $client->prepare($sql);
+// $request->execute([
+//     'user_id' => $_SESSION['user_id']
+// ]);
+// $recipes = $request->fetchAll();
+
+
+$sql = 'SELECT * FROM beers JOIN user_beer ON user_beer.beer_id = beers.beer_id WHERE user_beer.user_id = :user_id';
+$request = $client->prepare($sql);
+$request->execute([
+    'user_id' => $_SESSION['loggedUser']['user_id']
+]);
+$beers = $request->fetchAll();
+
 ?>
+
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeerDealer</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<?php require_once(__DIR__ . '/src/partials/header.php'); ?>
+<main>
+    <section class="beer-list">
+        <h2>Mes bières favorites</h2>
+        <div class="items">
+            <?php foreach ($beers as $beer): ?>
+                <article>
+                    <div class="title">
+                        <h3><?= $beer['name'] ?></h3>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </section>
+</main>
+<?php require_once(__DIR__ . '/src/partials/footer.php'); ?>
+</body>
+
+</html>

@@ -1,4 +1,8 @@
 <?php
+
+require_once(__DIR__. '/config/mysql.php');
+require_once(__DIR__. '/config/connect.php');
+
 if (isset($_POST['full_name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['age'])) {
     $sql = 'INSERT INTO users (full_name, email, password, age) VALUES (:full_name, :email, :password, :age)';
     $request = $client->prepare($sql);

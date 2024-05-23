@@ -1,9 +1,13 @@
 <?php
+
 session_start();
-require_once(__DIR__. '/src/config/mysql.php');
-require_once(__DIR__. '/src/config/connect.php');
-require_once(__DIR__. '/src/partials/header.php');
-require_once(__DIR__. '/src/partials/footer.php');
+
+if (!isset($_SESSION['loggedUser'])) {
+    header('Location: src/login.php');
+}
+
+require_once(__DIR__ . '/src/config/mysql.php');
+require_once(__DIR__ . '/src/config/connect.php');
 
 // $sql = 'SELECT * FROM beers
 // JOIN user_beer ON user_beer.beer_id = beers.beer_id
@@ -13,11 +17,13 @@ require_once(__DIR__. '/src/partials/footer.php');
 //     'user_id' => $_SESSION['user_id']
 // ]);
 // $recipes = $request->fetchAll();
-$sql = 'SELECT * FROM beers
-JOIN user_beer ON user_beer.beer_id = beers.beer_id';
+
+
+$sql = 'SELECT * FROM beers JOIN user_beer ON user_beer.beer_id = beers.beer_id';
 $request = $client->prepare($sql);
 $request->execute();
 $beers = $request->fetchAll();
+
 ?>
 
 <!DOCTYPE html>
@@ -29,15 +35,9 @@ $beers = $request->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeerDealer</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        #loader {
-            display: none;
-            width: 200px;
-        }
-    </style>
     <script>
         function showLoader() {
-            document.getElementById('loader').style.display = 'block';
+            document.getElementById('loader').style.display = 'flex';
         }
 
         function hideLoader() {
@@ -47,52 +47,43 @@ $beers = $request->fetchAll();
 </head>
 
 <body>
-    <header>
-        
-    </header>
-    <main>
-        <section>
-            <h1>BeerDealer</h1>
-            <form action="api.php" method="post" onsubmit="showLoader()"> <!-- Lien vers api.php -->
-                <input type="text" name="search" placeholder="Rechercher une bière..." >
-                <button type="submit">Rechercher</button>
-            </form>
-            <h2>Liste des bières</h2>
-            <ul>
-                <?php foreach ($beers as $beer) :
-                    $description = isset($beer['description'])? $beer['description'] : '';
-                    $description = htmlspecialchars($description);
-               ?>
-                    <li>
-                        <h3><?= htmlspecialchars($beer['name'])?></h3>
-                        <p><?= $description?></p>
-                        <a href="beer.php?id=<?= $beer['id']?>">Voir plus</a>
-                    </li>
-                <?php endforeach;?>
-            </ul>
-        </section>
-        <?php include 'src/query.php';?>
 
-    <h1>Les bières les plus populaires</h1>
+<?php require_once(__DIR__ . '/src/partials/header.php'); ?>
+<main>
+
+    <form class="search-form" action="api.php" method="post" onsubmit="showLoader()"> <!-- Lien vers api.php -->
+        <input type="text" name="search" placeholder="Rechercher une bière...">
+        <input type="submit" value="Rechercher">
+    </form>
+
+
+    <section class="beer-list">
+        <h2>Les bières les plus populaires</h2>
+        <div class="items">
+            <?php foreach ($beers as $beer): ?>
+                <article>
+                    <div class="title">
+                        <h3><?= $beer['name'] ?></h3>
+                        <span class="like"><?= 1 ?></span>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </section>
     <ul>
-        <?php foreach ($beers as $beer):?>
-            <li>
-                <h2><?= $beer['name']?></h2>
-                <p>Nombre de likes : <?= $beer['liked']?></p>
-            </li>
-        <?php endforeach;?>
+
     </ul>
-    </main>
-    <footer>
-        <p>&copy; 2023 BeerDealer</p>
-    </footer>
-    <div id="loader">
-        <svg xmlns=http://www.w3.org/2000/svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-            <circle cx="50" cy="50" fill="none" stroke="#49d1e0" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138">
-                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
-            </circle>
-        </svg>
-    </div>
+</main>
+<div id="loader">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <circle cx="50" cy="50" fill="none" stroke-width="10" r="35"
+                stroke-dasharray="164.93361431346415 56.97787143782138">
+            <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s"
+                              values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+        </circle>
+    </svg>
+</div>
+<?php require_once(__DIR__ . '/src/partials/footer.php'); ?>
 </body>
 
 </html>
