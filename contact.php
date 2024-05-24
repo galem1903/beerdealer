@@ -17,11 +17,11 @@ session_start();
 <main class="form">
     <section class="container">
         <h2>Page de Contact</h2>
-        <div class="data">
+        <form action="index.php" class="data">
             <p>Vous avez des questions ? Contactez-nous !</p>
             <textarea placeholder="Question..." name="content"></textarea>
             <input type="submit" value="Envoyer">
-        </div>
+        </form>
     </section>
 </main>
     </div>
