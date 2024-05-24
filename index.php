@@ -18,13 +18,6 @@ $request->execute([
 ]);
 $recipes = $request->fetchAll();
 
-$sql = "SELECT beers.*, COUNT(user_beer.beer_id) as likes
-        FROM beers 
-        JOIN user_beer ON beers.beer_id = user_beer.beer_id 
-        GROUP BY beers.name
-        ORDER BY likes DESC";
-
-
 $request = $client->prepare($sql);
 $request->execute();
 $beers = $request->fetchAll();
