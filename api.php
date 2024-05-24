@@ -6,6 +6,7 @@
 </head>
 <body>
 <?php
+
 if (isset($_POST['search'])) {
     $search = urlencode($_POST['search']);
 
@@ -86,7 +87,7 @@ if (isset($_POST['search'])) {
                         </form>
                         <div>
                             <ul>
-                                <li><span>Brasserie:</span> <?= $beer['beer']['brewer']['name'] ?> </li>
+                                <li><span>Brewery:</span> <?= $beer['beer']['brewer']['name'] ?> </li>
                                 <li><span>Type:</span> <?= $beer['beer']['style']['name'] ?> </li>
                                 <li><span>Pourcentage:</span> <?= round($beer['beer']['abv'], 1) ?>%</li>
                                 <li><span>Avis:</span> <?= round($beer['beer']['averageQuickRating'], 1) ?>/5</li>
