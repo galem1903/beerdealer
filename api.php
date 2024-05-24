@@ -9,14 +9,15 @@
 if (isset($_POST['search'])) {
     $search = urlencode($_POST['search']);
 
-    $curl_handle = curl_init();
-    curl_setopt($curl_handle, CURLOPT_URL, 'https://beer-searching.glitch.me/search?vc=HEPL&q=' . $search);
-    curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
-    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($curl_handle, CURLOPT_USERAGENT, 'beer-searching');
+    $url = 'https://beer-searching.glitch.me/search?vc=HEPL&q=' . $search;
 
-    $response = curl_exec($curl_handle);
-    curl_close($curl_handle);
+    $options = [
+        "http" => [
+            "header" => "User-Agent: beer-searching\r\n"
+        ]
+    ];
+    $context = stream_context_create($options);
+    $response = file_get_contents($url, false, $context);
 
     $data = json_decode($response, true);
     $beers = [
