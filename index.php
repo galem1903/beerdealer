@@ -9,14 +9,21 @@ if (!isset($_SESSION['loggedUser'])) {
 require_once(__DIR__ . '/src/config/mysql.php');
 require_once(__DIR__ . '/src/config/connect.php');
 
-$sql = 'SELECT * FROM beers
-JOIN user_beer ON user_beer.beer_id = beers.beer_id
-WHERE user_beer.user_id=:user_id';
-$request = $client->prepare($sql);
-$request->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-$recipes = $request->fetchAll();
+// $sql = 'SELECT * FROM beers
+// JOIN user_beer ON user_beer.beer_id = beers.beer_id
+// WHERE user_beer.user_id=:user_id';
+// $request = $client->prepare($sql);
+// $request->execute([
+//     'user_id' => $_SESSION['user_id']
+// ]);
+// $recipes = $request->fetchAll();
+
+$sql = "SELECT beers.*, COUNT(user_beer.beer_id) as likes
+        FROM beers 
+        JOIN user_beer ON beers.beer_id = user_beer.beer_id 
+        GROUP BY beers.name
+        ORDER BY likes DESC";
+
 
 $request = $client->prepare($sql);
 $request->execute();
