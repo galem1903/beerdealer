@@ -38,7 +38,7 @@ if (isset($_POST['search'])) {
     ];
     $beers = $data['data']['results']['items'];
 
-    
+    /*
     if (count($beers) > 0) {
         foreach ($beers as $beer) {
             $beer = $beer['beer'];
@@ -58,7 +58,7 @@ if (isset($_POST['search'])) {
     } else {
         echo "";
     }
-
+    */
     if (isset($_POST['add_to_favorite'])) {
         require_once(__DIR__ . '/src/add_to_favorites.php');
     }
